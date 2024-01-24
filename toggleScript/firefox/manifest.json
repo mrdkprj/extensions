@@ -1,0 +1,44 @@
+{
+
+  "manifest_version": 2,
+  "name": "ToggleScript",
+  "version": "1.0",
+  "description": "ToggleScript",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "anything@gmail.com",
+      "update_url": "https://example.com/updates.json"
+    }
+  },
+
+  "permissions": [
+    "<all_urls>",
+    "webRequest",
+    "webRequestBlocking",
+    "tabs",
+    "storage"
+  ],
+
+  "icons": {
+    "16": "./icons/enable/16.png",
+    "32": "./icons/enable/32.png",
+    "48": "./icons/enable/48.png",
+    "128": "./icons/enable/128.png"
+  },
+
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": {
+      "16": "./icons/enable/16.png",
+      "32": "./icons/enable/32.png",
+      "48": "./icons/enable/48.png",
+      "128": "./icons/enable/128.png"
+    },
+    "default_title": "Enabled"
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  }
+
+}

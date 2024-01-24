@@ -1,0 +1,158 @@
+[
+    {
+        "id": 2,
+        "priority": 2,
+        "action": {
+            "type": "allow"
+        },
+        "condition": {
+            "requestDomains": [
+                "earthtv.com",
+                "techrepublic.com",
+                "zdnet.com"
+            ],
+            "resourceTypes": [
+                "script"
+            ],
+            "urlFilter": "2mdn.net/instream/html5/ima3.js"
+        }
+    },
+    {
+        "id": 3,
+        "priority": 2,
+        "action": {
+            "type": "allow"
+        },
+        "condition": {
+            "requestDomains": [
+                "4channel.org"
+            ],
+            "resourceTypes": [
+                "image",
+                "xmlhttprequest"
+            ],
+            "urlFilter": "4cdn.org/adv/"
+        }
+    },
+    {
+        "id": 4,
+        "priority": 2,
+        "action": {
+            "type": "allow"
+        },
+        "condition": {
+            "requestDomains": [
+                "4channel.org"
+            ],
+            "resourceTypes": [
+                "image",
+                "xmlhttprequest"
+            ],
+            "urlFilter": "4channel.org/adv/"
+        }
+    },
+    {
+        "id": 5,
+        "priority": 2,
+        "action": {
+            "type": "allow"
+        },
+        "condition": {
+            "domainType": "firstParty",
+            "urlFilter": "abcnews.com/assets/js/prebid.min.js"
+        }
+    },
+    {
+        "id": 6,
+        "priority": 2,
+        "action": {
+            "type": "allow"
+        },
+        "condition": {
+            "domainType": "firstParty",
+            "resourceTypes": [
+                "script"
+            ],
+            "urlFilter": "abcnews.com/assets/player/"
+        }
+    },
+    {
+        "id": 7,
+        "priority": 2,
+        "action": {
+            "type": "allow"
+        },
+        "condition": {
+            "resourceTypes": [
+                "script"
+            ],
+            "urlFilter": "accuweather.com/bundles/prebid."
+        }
+    },
+    {
+        "id": 8,
+        "priority": 2,
+        "action": {
+            "type": "allow"
+        },
+        "condition": {
+            "requestDomains": [
+                "extrarebates.com"
+            ],
+            "resourceTypes": [
+                "image"
+            ],
+            "urlFilter": "ad.linksynergy.com^"
+        }
+    },
+    {
+        "id": 9,
+        "priority": 2,
+        "action": {
+            "type": "allow"
+        },
+        "condition": {
+            "urlFilter": "adap.tv/redir/javascript/vpaid.js"
+        }
+    },
+    {
+        "id": 10,
+        "priority": 2,
+        "action": {
+            "type": "allow"
+        },
+        "condition": {
+            "domainType": "firstParty",
+            "resourceTypes": [
+                "image"
+            ],
+            "urlFilter": "addicted.es^*/ad728-"
+        }
+    },
+    {
+        "id": 11,
+        "priority": 2,
+        "action": {
+            "type": "allow"
+        },
+        "condition": {
+            "urlFilter": "adf.ly/static/image/ad_top_bg2.png?"
+        }
+    },
+    {
+        "id": 12,
+        "priority": 2,
+        "action": {
+            "type": "allow"
+        },
+        "condition": {
+            "requestDomains": [
+                "adguard.com"
+            ],
+            "resourceTypes": [
+                "image"
+            ],
+            "urlFilter": "adguard.com/public/Adguard/Blog/Android/comparison/*_ads_"
+        }
+    }
+]
