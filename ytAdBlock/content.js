@@ -21,7 +21,7 @@ const fetchTargetUrls = [
 const { fetch: originalFetch} = window;
 
 const applyFetchRules = (res) => {
-    let data = res.replace(/"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, "").replace(/\"adSlots.*?\}\]\}\}\]\,/, "")
+    let data = res.replace(/"adPlacements.*?([A-Z]"\}|"\}{2})\}\]\,/, "").replace(/\"adSlots.*?\}\]\}\}\]\,/, "")
     return data;
 };
 
