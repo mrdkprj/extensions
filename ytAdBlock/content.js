@@ -1,5 +1,16 @@
+/*
+www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?([A-Z]"\}|"\}{2})\}\]\,/, , /playlist\?list=|player\?|watch\?v=|youtubei\/v1\/player/)
+www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?("adSlots"|"adBreakHeartbeatParams")/gms, $1, youtubei/v1/player)
+www.youtube.com##+js(trusted-replace-fetch-response, /"adPlacements.*?([A-Z]"\}|"\}{2})\}\]\,/, , player?)
+www.youtube.com##+js(trusted-replace-fetch-response, /\"adSlots.*?\}\]\}\}\]\,/, , player?)
+
+www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, , /playlist\?list=|player\?|watch\?v=|youtubei\/v1\/player/)
+www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?("adSlots"|"adBreakHeartbeatParams")/gms, $1, youtubei/v1/player)
+www.youtube.com##+js(trusted-replace-fetch-response, /"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, , player?)
+www.youtube.com##+js(trusted-replace-fetch-response, /\"adSlots.*?\}\]\}\}\]\,/, , player?)
+*/
 const xhrRules = [
-    {url:`playlist\?list=|player\?key=|watch\?v=|youtubei\/v1\/player`, pattern:`"adPlacements.*?([A-Z]"\}|"\}{2})\}\]\,`, replacement:""},
+    {url:`playlist\?list=|player\?|watch\?v=|youtubei\/v1\/player`, pattern:`"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,`, replacement:""},
     {url:`youtubei/v1/player`, pattern:`"adPlacements.*?("adSlots"|"adBreakHeartbeatParams")/gms`, replacement:"$1"},
 ];
 
@@ -10,7 +21,7 @@ const urls = [
 const { fetch: originalFetch} = window;
 
 const applyFetchRules = (res) => {
-    let data = res.replace(/"adPlacements.*?([A-Z]"\}|"\}{2})\}\]\,/, "")
+    let data = res.replace(/"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, "").replace(/\"adSlots.*?\}\]\}\}\]\,/, "")
     return data;
 };
 
@@ -153,8 +164,8 @@ Object.defineProperties(window, {
             if(val){
 
                 if(val.adPlacements) {val.adPlacements = undefined}
-                if(val.playerAds) {val.playerAds = undefined}
-                if(val.adSlots) {val.adSlots = undefined}
+                //if(val.playerAds) {val.playerAds = undefined}
+                //if(val.adSlots) {val.adSlots = undefined}
 
             }
 
