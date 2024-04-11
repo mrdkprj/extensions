@@ -14,8 +14,8 @@ const xhrRules = [
     {url:`youtubei/v1/player`, pattern:`"adPlacements.*?("adSlots"|"adBreakHeartbeatParams")/gms`, replacement:"$1"},
 ];
 
-const urls = [
-    "player?key="
+const fetchTargetUrls = [
+    "player?"
 ];
 
 const { fetch: originalFetch} = window;
@@ -41,7 +41,7 @@ window.fetch = async (...args) => {
 
     let response = await originalFetch(resource, config);
 
-    if(req && urls.some(v => req.url.includes(v))){
+    if(req && fetchTargetUrls.some(v => req.url.includes(v))){
         console.log(req.url)
         const r = await response.clone().text();
         const jsonData = applyFetchRules(r);
