@@ -8,6 +8,11 @@ www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?([A-Z]"\}|"\
 www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?("adSlots"|"adBreakHeartbeatParams")/gms, $1, youtubei/v1/player)
 www.youtube.com##+js(trusted-replace-fetch-response, /"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, , player?)
 www.youtube.com##+js(trusted-replace-fetch-response, /\"adSlots.*?\}\]\}\}\]\,/, , player?)
+
+www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, , /playlist\?list=|player\?|watch\?v=|youtubei\/v1\/player/)
+www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?("adSlots"|"adBreakHeartbeatParams")/gms, $1, youtubei/v1/player)
+www.youtube.com##+js(trusted-replace-fetch-response, /"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, , player?)
+www.youtube.com##+js(trusted-replace-fetch-response, /\"adSlots.*?\}\]\}\}\]\,/, , player?)
 */
 const xhrRules = [
     {url:`playlist\?list=|player\?|watch\?v=|youtubei\/v1\/player`, pattern:`"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,`, replacement:""},
@@ -21,7 +26,7 @@ const fetchTargetUrls = [
 const { fetch: originalFetch} = window;
 
 const applyFetchRules = (res) => {
-    let data = res.replace(/"adPlacements.*?([A-Z]"\}|"\}{2})\}\]\,/, "").replace(/\"adSlots.*?\}\]\}\}\]\,/, "")
+    let data = res.replace(/"adPlacements.*?([A-Z]"\}|"\}{2})\}\]\,/, "").replace(/\"adSlots.*?\}\]\}\}\]\,/, "").replace(/"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, "")
     return data;
 };
 
