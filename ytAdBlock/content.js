@@ -26,7 +26,7 @@ const fetchTargetUrls = [
 const { fetch: originalFetch} = window;
 
 const applyFetchRules = (res) => {
-    let data = res.replace(/"adPlacements.*?([A-Z]"\}|"\}{2})\}\]\,/, "").replace(/\"adSlots.*?\}\]\}\}\]\,/, "").replace(/"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, "")
+    let data = res.replace(/"adSlots.*?\}\}\]\,"adBreakHeartbeatParams/, "").replace(/"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, "")
     return data;
 };
 
@@ -169,8 +169,8 @@ Object.defineProperties(window, {
             if(val){
 
                 if(val.adPlacements) {val.adPlacements = undefined}
-                //if(val.playerAds) {val.playerAds = undefined}
-                //if(val.adSlots) {val.adSlots = undefined}
+                if(val.playerAds) {val.playerAds = undefined}
+                if(val.adSlots) {val.adSlots = undefined}
 
             }
 
