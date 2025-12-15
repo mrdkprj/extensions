@@ -1,22 +1,14 @@
 /*
-www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?([A-Z]"\}|"\}{2})\}\]\,/, , /playlist\?list=|player\?|watch\?v=|youtubei\/v1\/player/)
-www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?("adSlots"|"adBreakHeartbeatParams")/gms, $1, youtubei/v1/player)
-www.youtube.com##+js(trusted-replace-fetch-response, /"adPlacements.*?([A-Z]"\}|"\}{2})\}\]\,/, , player?)
-www.youtube.com##+js(trusted-replace-fetch-response, /\"adSlots.*?\}\]\}\}\]\,/, , player?)
+www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, , /playlist\?list=|\/player(?:\?.+)?$|watch\?[tv]=/)
+www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?("adSlots"|"adBreakHeartbeatParams")/gms, $1, /\/player(?:\?.+)?$/)
+www.youtube.com##+js(trusted-replace-fetch-response, '"adPlacements"', '"no_ads"', player?)
+www.youtube.com##+js(trusted-replace-fetch-response, '"adSlots"', '"no_ads"', player?)
 
-www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, , /playlist\?list=|player\?|watch\?v=|youtubei\/v1\/player/)
-www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?("adSlots"|"adBreakHeartbeatParams")/gms, $1, youtubei/v1/player)
-www.youtube.com##+js(trusted-replace-fetch-response, /"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, , player?)
-www.youtube.com##+js(trusted-replace-fetch-response, /\"adSlots.*?\}\]\}\}\]\,/, , player?)
 
-www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, , /playlist\?list=|player\?|watch\?v=|youtubei\/v1\/player/)
-www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?("adSlots"|"adBreakHeartbeatParams")/gms, $1, youtubei/v1/player)
-www.youtube.com##+js(trusted-replace-fetch-response, /"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, , player?)
-www.youtube.com##+js(trusted-replace-fetch-response, /\"adSlots.*?\}\]\}\}\]\,/, , player?)
 */
 const xhrRules = [
-    {url:`playlist\?list=|player\?|watch\?v=|youtubei\/v1\/player`, pattern:`"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,`, replacement:""},
-    {url:`youtubei/v1/player`, pattern:`"adPlacements.*?("adSlots"|"adBreakHeartbeatParams")/gms`, replacement:"$1"},
+    {url:/playlist\?list=|\/player(?:\?.+)?$|watch\?[tv]=/, pattern:/"adPlacements.*?("adSlots"|"adBreakHeartbeatParams")/gms, replacement:""},
+    {url:/\/player(?:\?.+)?$/, pattern:/"adPlacements.*?("adSlots"|"adBreakHeartbeatParams")/gms, replacement:"$1"},
 ];
 
 const fetchTargetUrls = [
@@ -26,7 +18,7 @@ const fetchTargetUrls = [
 const { fetch: originalFetch} = window;
 
 const applyFetchRules = (res) => {
-    let data = res.replace(/"adSlots.*?\}\}\]\,"adBreakHeartbeatParams/, "").replace(/"adPlacements.*?([A-Z]"\}|"\}{2\,4})\}\]\,/, "")
+    let data = res.replace("adPlacements", "no_ads").replace("adSlots", "no_ads")
     return data;
 };
 
@@ -47,10 +39,9 @@ window.fetch = async (...args) => {
     let response = await originalFetch(resource, config);
 
     if(req && fetchTargetUrls.some(v => req.url.includes(v))){
-        console.log(req.url)
         const r = await response.clone().text();
         const jsonData = applyFetchRules(r);
-
+        console.log(response.headers)
         response = new Response(jsonData, response);
     }
 
@@ -61,7 +52,6 @@ window.fetch = async (...args) => {
 /*
 * xhr
 */
-
 const applyXhrRules = (response) => {
     const data = JSON.stringify(response);
     xhrRules.forEach(rule => {
@@ -92,6 +82,9 @@ function blockXHR(){
             }
 
             return super.open(method, url, ...args);
+        }
+        get getResponseHeader(){
+            console.log(super.getAllResponseHeaders())
         }
         get response() {
             const innerResponse = super.response;
@@ -146,6 +139,13 @@ function blockXHR(){
 
 blockXHR();
 
+/*
+m.youtube.com,music.youtube.com,tv.youtube.com,www.youtube.com,youtubekids.com,youtube-nocookie.com##+js(set, ytInitialPlayerResponse.playerAds, undefined)
+m.youtube.com,music.youtube.com,tv.youtube.com,www.youtube.com,youtubekids.com,youtube-nocookie.com##+js(set, ytInitialPlayerResponse.adPlacements, undefined)
+m.youtube.com,music.youtube.com,tv.youtube.com,www.youtube.com,youtubekids.com,youtube-nocookie.com##+js(set, ytInitialPlayerResponse.adSlots, undefined)
+m.youtube.com,music.youtube.com,tv.youtube.com,www.youtube.com,youtubekids.com,youtube-nocookie.com##+js(set, playerResponse.adPlacements, undefined)
+m.youtube.com,music.youtube.com,youtubekids.com,youtube-nocookie.com##+js(json-prune, playerResponse.adPlacements playerResponse.playerAds playerResponse.adSlots adPlacements playerAds adSlots important)
+*/
 /*
 * object
 */

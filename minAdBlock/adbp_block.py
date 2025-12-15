@@ -34,7 +34,7 @@ def ignore(line):
     if line.startswith("!") or line.startswith("["):
         return True
 
-    if "popup" in line:
+    if "popup" in line and not is_css(line):
         return True
 
     return False

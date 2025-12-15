@@ -128,7 +128,6 @@ def split_per_domain(lines):
     return rules
 
 def create_css(lines):
-
     rules = split_per_domain(lines)
 
     generic_css = ""

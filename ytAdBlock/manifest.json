@@ -13,6 +13,22 @@
     "128": "./icons/128.png"
   },
 
+  "permissions": [
+    "declarativeNetRequest"
+  ],
+
+  "declarative_net_request" : {
+    "rule_resources" : [{
+      "id": "yt_ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+
+  "host_permissions": [
+    "*://*.youtube.com/*"
+  ],
+
   "content_scripts": [
     {
       "matches": [
