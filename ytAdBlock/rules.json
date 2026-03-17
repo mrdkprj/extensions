@@ -1,14 +1,40 @@
-[{
-    "id":1,
-    "priority":1,
-    "action":{
-        "type":"modifyHeaders",
-        "responseHeaders": [{
-            "header":"set-cookie",
-            "operation": "remove"
-        }]
+[
+    {
+        "id":1,
+        "priority":1,
+        "action":{
+            "type":"modifyHeaders",
+            "responseHeaders": [{
+                "header":"set-cookie",
+                "operation": "remove"
+            }]
+        },
+        "condition":{
+            "urlFilter": "||youtube.com",
+            "resourceTypes": [
+                "main_frame",
+                "sub_frame",
+                "xmlhttprequest",
+                "script",
+                "image",
+                "media",
+                "font",
+                "other"
+            ]
+        }
     },
-    "condition":{
-        "urlFilter": "*://*.youtube.com/*"
+    {
+        "id": 2,
+        "priority": 1,
+        "action": {
+            "type": "modifyHeaders",
+            "requestHeaders": [
+                { "header": "cookie", "operation": "remove" }
+            ]
+        },
+        "condition": {
+            "urlFilter": "||youtube.com",
+            "resourceTypes": ["main_frame","sub_frame","xmlhttprequest","script","image","media","font","other"]
+        }
     }
-}]
+]

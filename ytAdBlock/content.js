@@ -4,7 +4,6 @@ www.youtube.com##+js(trusted-replace-xhr-response, /"adPlacements.*?("adSlots"|"
 www.youtube.com##+js(trusted-replace-fetch-response, '"adPlacements"', '"no_ads"', player?)
 www.youtube.com##+js(trusted-replace-fetch-response, '"adSlots"', '"no_ads"', player?)
 
-
 */
 const xhrRules = [
     {url:/playlist\?list=|\/player(?:\?.+)?$|watch\?[tv]=/, pattern:/"adPlacements.*?("adSlots"|"adBreakHeartbeatParams")/gms, replacement:""},
@@ -83,9 +82,6 @@ function blockXHR(){
 
             return super.open(method, url, ...args);
         }
-        get getResponseHeader(){
-            console.log(super.getAllResponseHeaders())
-        }
         get response() {
             const innerResponse = super.response;
             const xhrDetails = xhrInstances.get(this);
@@ -145,6 +141,12 @@ m.youtube.com,music.youtube.com,tv.youtube.com,www.youtube.com,youtubekids.com,y
 m.youtube.com,music.youtube.com,tv.youtube.com,www.youtube.com,youtubekids.com,youtube-nocookie.com##+js(set, ytInitialPlayerResponse.adSlots, undefined)
 m.youtube.com,music.youtube.com,tv.youtube.com,www.youtube.com,youtubekids.com,youtube-nocookie.com##+js(set, playerResponse.adPlacements, undefined)
 m.youtube.com,music.youtube.com,youtubekids.com,youtube-nocookie.com##+js(json-prune, playerResponse.adPlacements playerResponse.playerAds playerResponse.adSlots adPlacements playerAds adSlots important)
+
+m.youtube.com,music.youtube.com,tv.youtube.com,www.youtube.com,youtubekids.com,youtube-nocookie.com##+js(set, ytInitialPlayerResponse.playerAds, undefined)
+m.youtube.com,music.youtube.com,tv.youtube.com,www.youtube.com,youtubekids.com,youtube-nocookie.com##+js(set, ytInitialPlayerResponse.adPlacements, undefined)
+m.youtube.com,music.youtube.com,tv.youtube.com,www.youtube.com,youtubekids.com,youtube-nocookie.com##+js(set, ytInitialPlayerResponse.adSlots, undefined)
+m.youtube.com,music.youtube.com,tv.youtube.com,www.youtube.com,youtubekids.com,youtube-nocookie.com##+js(set, playerResponse.adPlacements, undefined)
+m.youtube.com,music.youtube.com,youtubekids.com,youtube-nocookie.com##+js(json-prune, playerResponse.adPlacements playerResponse.playerAds playerResponse.adSlots adPlacements playerAds adSlots important)
 */
 /*
 * object
@@ -157,6 +159,21 @@ Object.defineProperties(window, {
     },
 
     _playerResponse:{
+        value:undefined,
+        writable:true,
+    },
+
+    _adPlacements: {
+        value:undefined,
+        writable:true,
+    },
+
+    _playerAds:{
+        value:undefined,
+        writable:true,
+    },
+
+    _adSlots:{
         value:undefined,
         writable:true,
     },
@@ -184,11 +201,40 @@ Object.defineProperties(window, {
         },
         set: function(val) {
             if(val){
-
+                if(val.adPlacements) {val.adPlacements = undefined}
+                if(val.playerAds) {val.playerAds = undefined}
+                if(val.adSlots) {val.adSlots = undefined}
                 if(val.adPlacements) {val.adPlacements = undefined}
 
             }
             this._playerResponse = val;
         }
     },
+
+    adPlacements: {
+        get: function(){
+            return this._adPlacements;
+        },
+        set: function() {
+            this._adPlacements = undefined;
+        }
+    },
+
+    playerAds: {
+        get: function(){
+            return this._playerAds;
+        },
+        set: function() {
+            this._playerAds = undefined;
+        }
+    },
+
+    adSlots: {
+        get: function(){
+            return this._adSlots;
+        },
+        set: function() {
+            this._adSlots = undefined;
+        }
+    }
 })
